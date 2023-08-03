@@ -1,20 +1,28 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import React from 'react';
+import { NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
+import LoginScreen from './LoginScreen';
+import GetStartedScreen from './GetStartedScreen';
+import ForgotPasswordScreen from './ForgotPasswordScreen';
+import ForgotPasswordCodeScreen from './ForgotPasswordCodeScreen';
+import NewPassword from './NewPassword';
+import SignupScreen from './Signup';
 
-export default function App() {
+const Stack = createStackNavigator();
+
+const App = () => {
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+    <NavigationContainer>
+      <Stack.Navigator>
+        <Stack.Screen name="JailTrack Get Started" component={GetStartedScreen} />
+        <Stack.Screen name="JailTrack Login" component={LoginScreen} />
+        <Stack.Screen name="JailTrack Forgot Password" component={ForgotPasswordScreen} />
+        <Stack.Screen name="JailTrack Forgot Password Code" component={ForgotPasswordCodeScreen} />
+        <Stack.Screen name="JailTrack New Password" component={NewPassword} />
+        <Stack.Screen name="Signup" component={SignupScreen} />
+      </Stack.Navigator>
+    </NavigationContainer>
   );
-}
+};
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+export default App;
