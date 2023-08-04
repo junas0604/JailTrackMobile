@@ -7,7 +7,8 @@ import ForgotPasswordScreen from './ForgotPasswordScreen';
 import ForgotPasswordCodeScreen from './ForgotPasswordCodeScreen';
 import NewPassword from './NewPassword';
 import SignupScreen from './Signup';
-
+import Sidebar from './Sidebar';
+import Dashboard from './Dashboard';
 const Stack = createStackNavigator();
 
 const App = () => {
@@ -15,11 +16,13 @@ const App = () => {
     <NavigationContainer>
       <Stack.Navigator>
         <Stack.Screen name="JailTrack Get Started" component={GetStartedScreen} />
+        <Stack.Screen name="Dashboard" component={Dashboard} />
         <Stack.Screen name="JailTrack Login" component={LoginScreen} />
         <Stack.Screen name="JailTrack Forgot Password" component={ForgotPasswordScreen} />
         <Stack.Screen name="JailTrack Forgot Password Code" component={ForgotPasswordCodeScreen} />
         <Stack.Screen name="JailTrack New Password" component={NewPassword} />
         <Stack.Screen name="Signup" component={SignupScreen} />
+        <Stack.Screen name="Sidebar" component={Sidebar} />
       </Stack.Navigator>
     </NavigationContainer>
   );
