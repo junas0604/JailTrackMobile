@@ -1,21 +1,20 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet, ImageBackground, Alert } from 'react-native';
-import { initializeApp } from '@react-native-firebase/app';
-import { createUserWithEmailAndPassword } from 'firebase/auth';
 import { auth, db } from './config/firebase';
 import { addDoc, collection } from "firebase/firestore";
 
 // Initialize Firebase
 
 const SignupScreen = ({ navigation }) => {
-  const [fullName, setfullName] = useState('');
+  const [fullName, setFullName] = useState('');
   const [email, setEmail] = useState('');
-  const [phoneNumber, setphoneNumber] = useState('');
+  const [phoneNumber, setPhoneNumber] = useState('');
   const [rank, setRank] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
 
   const CollectionRef = collection(db, "JailOfficer")
+  const CollectionRef1 = collection(db, "JailTrack")
 
   const handleSignup = async () => {
     if (!fullName.trim() || !email.trim() || !phoneNumber.trim() || !rank.trim() || !password.trim() || !confirmPassword.trim()) {
@@ -28,22 +27,42 @@ const SignupScreen = ({ navigation }) => {
       return;
     }
 
-      try {
-          await addDoc(CollectionRef, { email: email, fullName: fullName, password: password, phoneNumber: phoneNumber, rank: rank })
-      } catch (err) {
-          console.error(err)
-      }
+    // Add verification for existence of fields
+    if (!fullName || !phoneNumber || !rank || !password || !email) {
+      showAlert('Please provide all the required information.');
+      return;
+    }
 
-	showAlert('Signup successful!');
-      // Reset form fields
-      setFirstName('');
-      setLastName('');
-      setEmail('');
-      setPhone('');
-      setRank('');
-      setPassword('');
-      setConfirmPassword('');
+    try {
+      await addDoc(CollectionRef1,{
+        email: email,
+        fullName: fullName,
+        password: password,
+        phoneNumber: phoneNumber,
+        rank: rank,
+      });
+      
+      await addDoc(CollectionRef,{
+        email: email,
+        fullName: fullName,
+        password: password,
+        phoneNumber: phoneNumber,
+        rank: rank,
+      });
+    } catch (err) {
+      showAlert('Please provide all the required information.');
+      showAlert('Signup failed. Please try again.');
+      return;
+    }
 
+    showAlert('Signup successful!');
+    // Reset form fields
+    setFullName('');
+    setEmail('');
+    setPhoneNumber('');
+    setRank('');
+    setPassword('');
+    setConfirmPassword('');
   };
 
   const showAlert = (message) => {
@@ -59,7 +78,7 @@ const SignupScreen = ({ navigation }) => {
           style={[styles.input, { color: 'white' }]}
           placeholder="Enter Fullname"
           value={fullName}
-          onChangeText={(text) =>setfullName(text)}
+          onChangeText={(text) => setFullName(text)}
         />
 
         <Text style={styles.label}>Email Address</Text>
@@ -75,7 +94,7 @@ const SignupScreen = ({ navigation }) => {
           style={[styles.input, { color: 'white' }]}
           placeholder="Enter Phone Number"
           value={phoneNumber}
-          onChangeText={(text) => setphoneNumber(text)}
+          onChangeText={(text) => setPhoneNumber(text)}
         />
 
         <Text style={styles.label}>Rank/Position</Text>
