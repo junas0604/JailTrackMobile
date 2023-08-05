@@ -1,33 +1,40 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet, ImageBackground, Alert } from 'react-native';
+import { initializeApp } from '@react-native-firebase/app';
+import { createUserWithEmailAndPassword } from 'firebase/auth';
+import { auth, db } from './config/firebase';
+import { addDoc, collection } from "firebase/firestore";
 
-const SignupScreen = (navigation) => {
-  const [firstName, setFirstName] = useState('');
-  const [lastName, setLastName] = useState('');
+// Initialize Firebase
+
+const SignupScreen = ({ navigation }) => {
+  const [fullName, setfullName] = useState('');
   const [email, setEmail] = useState('');
-  const [phone, setPhone] = useState('');
+  const [phoneNumber, setphoneNumber] = useState('');
   const [rank, setRank] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
 
-  const handleSignup = () => {
-    if (!firstName.trim()) {
-      showAlert('Please Enter First Name');
-    } else if (!lastName.trim()) {
-      showAlert('Please Enter Last Name');
-    } else if (!email.trim()) {
-      showAlert('Please Enter Email Address');
-    } else if (!phone.trim()) {
-      showAlert('Please Enter Phone Number');
-    } else if (!rank.trim()) {
-      showAlert('Please Enter Rank/Position');
-    } else if (!password.trim()) {
-      showAlert('Please Enter Password');
-    } else if (password !== confirmPassword) {
+  const CollectionRef = collection(db, "JailOfficer")
+
+  const handleSignup = async () => {
+    if (!fullName.trim() || !email.trim() || !phoneNumber.trim() || !rank.trim() || !password.trim() || !confirmPassword.trim()) {
+      showAlert('Please fill all fields');
+      return;
+    }
+
+    if (password !== confirmPassword) {
       showAlert('Passwords do not match');
-    } else {
-      // Perform the signup logic here (e.g., API call or other operations)
-      showAlert('Signup successful!');
+      return;
+    }
+
+      try {
+          await addDoc(CollectionRef, { email: email, fullName: fullName, password: password, phoneNumber: phoneNumber, rank: rank })
+      } catch (err) {
+          console.error(err)
+      }
+
+	showAlert('Signup successful!');
       // Reset form fields
       setFirstName('');
       setLastName('');
@@ -36,7 +43,7 @@ const SignupScreen = (navigation) => {
       setRank('');
       setPassword('');
       setConfirmPassword('');
-    }
+
   };
 
   const showAlert = (message) => {
@@ -46,20 +53,13 @@ const SignupScreen = (navigation) => {
   return (
     <ImageBackground source={require('./Pictures/Background.png')} style={styles.background}>
       <View style={styles.container}>
-        <Text style={styles.label}>First Name</Text>
-        <TextInput
-          style={[styles.input, { color: 'white' }]}
-          placeholder="Enter First Name"
-          value={firstName}
-          onChangeText={(text) => setFirstName(text)}
-        />
 
-        <Text style={styles.label}>Last Name</Text>
+        <Text style={styles.label}>Full Name</Text>
         <TextInput
           style={[styles.input, { color: 'white' }]}
-          placeholder="Enter Last Name"
-          value={lastName}
-          onChangeText={(text) => setLastName(text)}
+          placeholder="Enter Fullname"
+          value={fullName}
+          onChangeText={(text) =>setfullName(text)}
         />
 
         <Text style={styles.label}>Email Address</Text>
@@ -74,8 +74,8 @@ const SignupScreen = (navigation) => {
         <TextInput
           style={[styles.input, { color: 'white' }]}
           placeholder="Enter Phone Number"
-          value={phone}
-          onChangeText={(text) => setPhone(text)}
+          value={phoneNumber}
+          onChangeText={(text) => setphoneNumber(text)}
         />
 
         <Text style={styles.label}>Rank/Position</Text>

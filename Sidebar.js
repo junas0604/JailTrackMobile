@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, Image } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 
 const Sidebar = () => {
@@ -11,19 +11,38 @@ const Sidebar = () => {
 
   return (
     <View style={styles.container}>
-      <TouchableOpacity onPress={() => handleNavigation('Signup')}>
-        <Text style={styles.text}>Dashboard</Text>
+      <TouchableOpacity onPress={() => handleNavigation('Dashboard')}>
+        <Text style={styles.text}><View style={styles.imageContainer}>
+          <Image source={require('./Pictures/Dashboard.png')} style={styles.image} />
+        </View>  Dashboard</Text>
       </TouchableOpacity>
-      {/*<TouchableOpacity onPress={() => handleNavigation('Notifications')}>
-        <Text style={styles.text}>Notifications</Text>
+
+      <TouchableOpacity onPress={() => handleNavigation('Notification')}>
+        <Text style={styles.text}><View style={styles.imageContainer}>
+          <Image source={require('./Pictures/bell.png')} style={styles.image} />
+        </View>  Notification</Text>
       </TouchableOpacity>
-      <TouchableOpacity onPress={() => handleNavigation('View Schedule')}>
-        <Text style={styles.text}>View Schedule</Text>
+
+      <TouchableOpacity onPress={() => handleNavigation('ViewSched')}>
+        <Text style={styles.text}><View style={styles.imageContainer}>
+          <Image source={require('./Pictures/calendar.png')} style={styles.image} />
+        </View>  View Sched</Text>
       </TouchableOpacity>
-      <TouchableOpacity onPress={() => handleNavigation('View Team')}>
-        <Text style={styles.text}>View Team</Text>
+
+
+      <TouchableOpacity onPress={() => handleNavigation('AttendanceHistory')}>
+        <Text style={styles.text}><View style={styles.imageContainer}>
+          <Image source={require('./Pictures/history.png')} style={styles.image} />
+        </View>  Attendance History</Text>
       </TouchableOpacity>
-      <TouchableOpacity onPress={() => handleNavigation('Attendance History')}>
+
+      <TouchableOpacity onPress={() => handleNavigation('FileNotifRequest')}>
+        <Text style={styles.text}><View style={styles.imageContainer}>
+          <Image source={require('./Pictures/request.png')} style={styles.image} />
+        </View>  File Shift Change</Text>
+      </TouchableOpacity>
+
+      {/*<TouchableOpacity onPress={() => handleNavigation('Attendance History')}>
         <Text style={styles.text}>Attendance History</Text>
       </TouchableOpacity>
       <TouchableOpacity onPress={() => handleNavigation('File Shift Change')}>
@@ -31,7 +50,7 @@ const Sidebar = () => {
       </TouchableOpacity>
       <TouchableOpacity onPress={() => handleNavigation('Settings')}>
         <Text style={styles.text}>Settings</Text>
-  </TouchableOpacity>*/}
+      </TouchableOpacity>*/}
     </View>
   );
 };
@@ -48,6 +67,15 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontWeight: 'bold',
     marginBottom: 20,
+  },
+  imageContainer: {
+    width: 20,
+    height: 20,
+    marginRight: 10,
+  },
+  image: {
+    width: 20,
+    height: 20,
   },
 });
 
