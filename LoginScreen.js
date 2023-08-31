@@ -84,13 +84,7 @@ const LoginScreen = ({ navigation }) => {
               </Button>
             </View>
           </View>
-
-          <View style={styles.signUpContainer}>
-            <Text style={styles.signUpText}>Don't have an Account?</Text>
-            <Text style={styles.signUpLink} onPress={handleSignUp}>
-              Sign Up
-            </Text>
-          </View>
+          
           <View style={styles.forgotPasswordContainer}>
             <Text style={styles.forgotPasswordText} onPress={handleForgotPassword}>
               Forgot Password?

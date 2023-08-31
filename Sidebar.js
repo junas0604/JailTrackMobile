@@ -42,6 +42,11 @@ const Sidebar = () => {
         </View>  File Shift Change</Text>
       </TouchableOpacity>
 
+      <TouchableOpacity onPress={() => handleNavigation('JailTrack Login')}>
+        <Text style={styles.text}><View style={styles.imageContainer}>
+        </View>  Logout </Text>
+      </TouchableOpacity>
+
       {/*<TouchableOpacity onPress={() => handleNavigation('Attendance History')}>
         <Text style={styles.text}>Attendance History</Text>
       </TouchableOpacity>
